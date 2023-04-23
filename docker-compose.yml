@@ -1,0 +1,16 @@
+services:
+  web-app:
+    build:
+      context: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./service:/service
+
+    command: > 
+      sh -c "python manage.py runserver 0.0.0.0:8000"
+
+  database:
+    image: postgres14.6-alpine
+    environment:
+      - POSGRES_DB=db_name
