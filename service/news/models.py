@@ -53,7 +53,6 @@ class News(models.Model):
             new_image_io = BytesIO()
             new_image.save(new_image_io, format='PNG')
             temp_name = self.image.name
-            print(temp_name)
             self.preview.save(
                 temp_name,
                 content=ContentFile(new_image_io.getvalue()),
