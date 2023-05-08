@@ -3,3 +3,8 @@ djangorestframework==3.14.0
 psycopg2==2.8.6
 Pillow==9.5.0
 django-summernote==0.8.20.0
+celery[redis]==5.2.7
+django-constance[database]==2.9.1
+django-picklefield==3.1
+django-environ==0.10.0
+django-celery-beat==2.5.0

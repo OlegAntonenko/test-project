@@ -17,6 +17,7 @@ services:
 
     depends_on:
       - database
+      - redis
 
   database:
     image: postgres:14.6-alpine
@@ -24,3 +25,44 @@ services:
       - POSTGRES_DB=dbname
       - POSTGRES_USER=dbuser
       - POSTGRES_PASSWORD=1234
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    ports:
+      - 5432:5432
+
+  redis:
+    image: redis:7.0.0-alpine
+
+  celery:
+    build:
+      context: .
+    command: celery -A celery_app.app worker -l info
+    volumes:
+      - ./service:/service
+    environment:
+      - DB_HOST=database
+      - DB_NAME=dbname
+      - DB_USER=dbuser
+      - DB_PASS=1234
+    depends_on:
+      - redis
+      - database
+      - web-app
+
+  celery-beat:
+    build:
+      context: .
+    command: celery -A celery_app.app beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    environment:
+      - DB_HOST=database
+      - DB_NAME=dbname
+      - DB_USER=dbuser
+      - DB_PASS=1234
+    volumes:
+      - ./service:/service
+    depends_on:
+      - redis
+      - celery
+
+volumes:
+  postgres_data:
