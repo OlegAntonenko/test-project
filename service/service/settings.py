@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'django_summernote',
     'rest_framework',
     'news',
+    'places',
 ]
 
 CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'

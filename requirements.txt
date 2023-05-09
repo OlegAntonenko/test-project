@@ -8,3 +8,5 @@ django-constance[database]==2.9.1
 django-picklefield==3.1
 django-environ==0.10.0
 django-celery-beat==2.5.0
+pandas==2.0
+openpyxl==3.1.2
