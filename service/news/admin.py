@@ -4,6 +4,7 @@ from news.models import News, Author
 
 
 class NewsAdmin(SummernoteModelAdmin):
+    exclude = ('preview', 'date',)
     summernote_fields = ('text',)
 
 

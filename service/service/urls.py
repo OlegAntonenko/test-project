@@ -18,12 +18,18 @@ from django.urls import path, include
 
 from django.conf import settings
 from django.conf.urls.static import static
+from rest_framework import routers
 
+from news.views import NewsViewSet
+from places.views import UploadViewSet
+
+router = routers.DefaultRouter()
+router.register(r'upload', UploadViewSet, basename="upload")
+router.register(r'news', NewsViewSet, basename="news")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('places.urls')),
-    path('', include('news.urls')),
+    path('', include(router.urls)),
     path('summernote/', include('django_summernote.urls')),
 ]
 
