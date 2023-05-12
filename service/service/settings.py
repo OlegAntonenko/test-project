@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'django_admin_geomap',
     'constance',
     'constance.backends.database',
     'django_celery_beat',
@@ -83,7 +84,7 @@ ROOT_URLCONF = 'service.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['/usr/local/lib/python3.9/site-packages/django_admin_geomap/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

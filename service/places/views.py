@@ -4,7 +4,7 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from .serializers import UploadSerializer
 from rest_framework import status
-from .models import Places
+from .models import Place
 
 
 class UploadViewSet(ViewSet):
@@ -38,7 +38,7 @@ class UploadViewSet(ViewSet):
 
         for ind, row in df.iterrows():
             try:
-                place, _ = Places.objects.update_or_create(
+                place, _ = Place.objects.update_or_create(
                     name=row['name'],
                     latitude=row['latitude'],
                     longitude=row['longitude'],
