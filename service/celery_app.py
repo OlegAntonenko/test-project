@@ -12,6 +12,10 @@ app.conf.beat_schedule = {
         'task': 'news.tasks.send_email_users',
         'schedule': crontab(hour=12, minute=0),
     },
+    'get_weather_report': {
+            'task': 'places.tasks.get_weather_report',
+            'schedule': crontab(minute='0', hour='*/1'),
+        },
 }
 
 app.autodiscover_tasks()
