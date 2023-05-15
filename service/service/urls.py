@@ -21,7 +21,7 @@ from django.conf.urls.static import static
 from rest_framework import routers
 
 from news.views import NewsViewSet
-from places.views import UploadViewSet
+from places.views import UploadViewSet, WeatherReportView
 
 router = routers.DefaultRouter()
 router.register(r'upload', UploadViewSet, basename="upload")
@@ -29,9 +29,11 @@ router.register(r'news', NewsViewSet, basename="news")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include(router.urls)),
+    path('places/', include('places.urls')),
     path('summernote/', include('django_summernote.urls')),
 ]
+
+urlpatterns += router.urls
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
