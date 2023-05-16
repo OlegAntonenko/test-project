@@ -111,4 +111,3 @@ class WeatherReportView(APIView):
         output.close()
 
         return response
-

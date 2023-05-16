@@ -1,5 +1,6 @@
 import datetime
-
+import requests
+from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django_admin_geomap import GeoItem
 from django.db import models
@@ -17,6 +18,34 @@ class Place(models.Model, GeoItem):
     rate = models.IntegerField(default=1, validators=[MaxValueValidator(25), MinValueValidator(1)])
     lat = models.FloatField(null=True, blank=True, validators=[MaxValueValidator(90), MinValueValidator(-90)])
     lon = models.FloatField(null=True, blank=True, validators=[MaxValueValidator(180), MinValueValidator(-180)])
+
+    def update_or_create_weather(self) -> None:
+
+        res = requests.get(
+            "http://api.openweathermap.org/data/2.5/weather",
+            params={'lat': self.lat,
+                    'lon': self.lon,
+                    'units': 'metric',
+                    'lang': 'ru',
+                    'APPID': settings.WEATHER_KEY_API}
+        )
+        data = res.json()
+
+        whether, created = Whether.objects.update_or_create(
+            place=self,
+            defaults={
+                'atmosphere_pressure': data['main']['pressure'],
+                'air_humidity': data['main']['humidity'],
+                'direction_wind': data['wind']['deg'],
+                'wind_speed': data['wind']['speed'],
+                'temperature': data['main']['temp'],
+                'date': datetime.datetime.now(),
+            },
+        )
+        if created:
+            print(f"create object: {whether}")
+        else:
+            print(f"update object: {whether}")
 
     @property
     def geomap_popup_view(self):

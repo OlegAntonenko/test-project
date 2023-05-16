@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
+import django
+# django.setup()
 
 from datetime import time
 from pathlib import Path
@@ -60,6 +62,7 @@ CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
 CONSTANCE_ADDITIONAL_FIELDS = {
     'user_select': ['django.forms.fields.ChoiceField', {
         'widget': 'django.forms.CheckboxSelectMultiple',
+        '': (),
     }],
 }
 
@@ -67,6 +70,7 @@ CONSTANCE_CONFIG = {
     'TITLE': ('News', 'Write title email', str),
     'TEXT': ('News today: ', 'Write text email', str),
     'TIME_SEND': (time(12, 00, 00), 'Time send mail'),
+    'USERS': ('', 'select users', 'user_select'),
 }
 
 MIDDLEWARE = [
@@ -163,7 +167,6 @@ MEDIA_URL = '/media/'
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
-# CELERY_BROKER_URL = 'redis://redis:6379/1'
 CELERY_BROKER_URL = 'redis://redis:6379'
 CELERY_RESULT_BACKEND = 'redis://redis:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
@@ -181,3 +184,5 @@ EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 
 # Custom setting. To email
 RECIPIENT_ADDRESS = env('RECIPIENT_ADDRESS')
+
+WEATHER_KEY_API = env('WEATHER_API_KEY')
